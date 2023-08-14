@@ -1,19 +1,14 @@
 package assignment1;
 
-import java.util.*;
-import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.*;
 
 public class UI {
 	private Scanner userInput = new Scanner(System.in); // Reads input from the user in the console
 	private String userChoice; // Where the user's choice is stored so the program doesn't prompt the user
 								// again unnecessarily
-	private HashMap<Integer, Post> posts = new HashMap<Integer, Post>(); // The hashmap for all of the csv posts
 	private boolean quitState = false; // Reads whether the user has opted to quit
+	private Logic logic = new Logic(); // The class containing all the backend methods for social media post analysing
 
 	/**
 	 * Creates the menu interface and lets the user choose from the list of methods.
@@ -32,137 +27,83 @@ public class UI {
 		System.out.printf("%nWhat would you like to do?");
 		System.out.printf("%n> ");
 		try {
-			userChoice = userInput.next();
+			setUserChoice(getUserInput().next());
 
-			switch (userChoice) {
-			case "1":
-				addPost();
+			switch (getUserChoice()) {
+			case "1": // Add post
+				System.out.printf("%nWhat is the ID?");
+				System.out.printf("%n> ");
+				setUserChoice(getUserInput().next());
+				int id = Integer.valueOf(getUserChoice());
+
+				System.out.printf("%nWhat is the content of the post?");
+				System.out.printf("%n> ");
+				setUserChoice(getUserInput().next());
+				String content = getUserChoice();
+
+				System.out.printf("%nWho is the author?");
+				System.out.printf("%n> ");
+				setUserChoice(getUserInput().next());
+				String author = getUserChoice();
+
+				System.out.printf("%nHow many likes does this post have?");
+				System.out.printf("%n> ");
+				setUserChoice(getUserInput().next());
+				int likes = Integer.valueOf(getUserChoice());
+
+				System.out.printf("%nHow many shares does this post have?");
+				System.out.printf("%n> ");
+				setUserChoice(getUserInput().next());
+				int shares = Integer.valueOf(getUserChoice());
+
+				System.out.printf("%nWhat is the date of the post (In DD/MM/YYYY format)?");
+				System.out.printf("%n> ");
+				setUserChoice(getUserInput().next());
+				String dateTime = getUserChoice();
+				
+				System.out.printf("%nWhat time was it posted (In HH:MM format)?");
+				System.out.printf("%n> ");
+				setUserChoice(getUserInput().next());
+				dateTime += " " + getUserChoice();
+				if (!getLogic().dateTimeValidator(dateTime)) {
+					throw new DateTimeParseException(null, dateTime, 0);
+				}
+
+				getLogic().addPost(id, content, author, likes, shares, dateTime);
 				break;
-			case "2":
-				removePost();
+			case "2": // Remove post
+				System.out.printf("%nWhich post would you like to delete? (Or type \"Q\" to go back)");
+				System.out.printf("%n> ");
+				getUserChoice();
 				break;
-			case "3":
-				retrievePost();
+			case "3": // Retrieve post
+				System.out.printf("%nWhich post would you like to retrieve? (Or type \"Q\" to go back)");
+				System.out.printf("%n> ");
+				setUserChoice(getUserInput().next());
+				getLogic().retrievePost(Integer.valueOf(getUserChoice()));
 				break;
-			case "4":
-				retrievePostsByLikes();
+			case "4": // Retrieve N posts by likes in descending order
+				getLogic().retrievePostsByLikes();
 				break;
-			case "5":
-				retrievePostsByShares();
+			case "5": // Retrieve N posts by shares in descending order
+				getLogic().retrievePostsByShares();
+				break;
 			case "q":
-			case "Q":
+			case "Q": // Quit
 				setQuitState(true);
 				break;
 			default:
+				System.out.println("Executed");
 				throw new BadUserInputException();
 			}
 		} catch (BadUserInputException e) {
-			System.out.printf("Please only choose from the shown menu items!");
-		}
-	}
-
-	/**
-	 * Reads the posts.csv file, splits it by the comma delimiter, and creates new
-	 * post objects into the posts hashmap. Catches exceptions related to file not
-	 * found, and file improperly formatted.
-	 */
-	public void readFile() {
-		try {
-			List<String> readPosts = Files.readAllLines(Paths.get("posts.csv"));
-
-			if (!readPosts.get(0).equals("ID,content,author,likes,shares,date-time")) {
-				throw new FileFormatException();
-			}
-
-			for (int i = 1; i < readPosts.size(); i++) {
-				String[] splitPost = readPosts.get(i).split(",");
-
-				Post newPost = new Post(Integer.parseInt(splitPost[0]), splitPost[1], splitPost[2],
-						Integer.parseInt(splitPost[3]), Integer.parseInt(splitPost[4]), splitPost[5]);
-				posts.put(newPost.getid(), newPost);
-			}
-
-		} catch (FileFormatException e) {
-			System.out.println(
-					"Error! One or more of the posts in the file was formatted incorrectly. Posts only partially loaded.");
 			e.printStackTrace();
-		} catch (IOException e) {
-			System.out.println("Error! File not found or file is corrupt. No posts were loaded.");
-		} // TODO: Catch exception for when a record is improperly formatted
-	}
-
-	/**
-	 * Adds a post from user specifications. Checks for validity of user data.
-	 */
-	public void addPost() {
-	}
-
-	/**
-	 * Removes a post based on ID, throws an error if ID is not found in the
-	 * hashmap.
-	 */
-	public void removePost() {
-		int id;
-		System.out.printf("%nWhich post would you like to delete? (Or type \"Q\" to go back)");
-		System.out.printf("%n> ");
-		try {
-			id = userInput.nextInt();
-			if (getPosts().get(id) == null) {
-				throw new NullPointerException();
-			}
-			getPosts().remove(id);
-		} catch (NullPointerException | InputMismatchException e) {
-			System.out.printf("%nThat post wasn't found!");
-		}
-	}
-
-	/**
-	 * Retrieves a post based on ID, throws an error if ID is not found in the
-	 * hashmap.
-	 */
-	public void retrievePost() {
-		int id;
-		System.out.printf("%nWhich post would you like to retrieve? (Or type \"Q\" to go back)");
-		System.out.printf("%n> ");
-		try {
-			id = userInput.nextInt();
-			if (getPosts().get(id) == null) {
-				throw new NullPointerException();
-			}
-			System.out.print(getPosts().get(id));
-		} catch (NullPointerException | InputMismatchException e) {
-			System.out.printf("%nThat post wasn't found!");
-		}
-	}
-
-	/**
-	 * 
-	 */
-	public void retrievePostsByLikes() {
-	}
-
-	/**
-	 * 
-	 */
-	public void retrievePostsByShares() {
-	}
-
-	public boolean dateTimeValidator(String dateTime) {
-		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("d/M/yyyy HH:mm");
-		try {
-			LocalDate.parse(dateTime, dateTimeFormatter);
-			return true;
+			System.out.printf("Please only choose from the shown menu items!");
+		} catch (NumberFormatException e) {
+			System.out.printf("Please only type numbers for that choice!");
 		} catch (DateTimeParseException e) {
-			return false;
+			System.out.printf("Please enter a valid date/time in the required format!");
 		}
-	}
-
-	public HashMap<Integer, Post> getPosts() {
-		return posts;
-	}
-
-	public void setPosts(HashMap<Integer, Post> posts) {
-		this.posts = posts;
 	}
 
 	public boolean getQuitState() {
@@ -171,5 +112,29 @@ public class UI {
 
 	public void setQuitState(boolean quitState) {
 		this.quitState = quitState;
+	}
+
+	public Scanner getUserInput() {
+		return userInput;
+	}
+
+	public void setUserInput(Scanner userInput) {
+		this.userInput = userInput;
+	}
+
+	public String getUserChoice() {
+		return userChoice;
+	}
+
+	public void setUserChoice(String userChoice) {
+		this.userChoice = userChoice;
+	}
+
+	public Logic getLogic() {
+		return logic;
+	}
+
+	public void setLogic(Logic logic) {
+		this.logic = logic;
 	}
 }
