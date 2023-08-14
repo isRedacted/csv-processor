@@ -39,6 +39,9 @@ public class UI {
 				System.out.printf("%nWhat is the content of the post?");
 				System.out.printf("%n> ");
 				setUserChoice(getUserInput().next());
+				if (getUserChoice().contains(",")) {
+					throw new ContentFormatException();
+				}
 				String content = getUserChoice();
 
 				System.out.printf("%nWho is the author?");
@@ -103,6 +106,8 @@ public class UI {
 			System.out.printf("Please only type numbers for that choice!");
 		} catch (DateTimeParseException e) {
 			System.out.printf("Please enter a valid date/time in the required format!");
+		} catch (ContentFormatException e) {
+			System.out.printf("Please make sure the post content doesn't include a comma!");
 		}
 	}
 

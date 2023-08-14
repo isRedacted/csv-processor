@@ -48,6 +48,7 @@ public class Logic {
 	 */
 	public void addPost(int id, String content, String author, int likes, int shares, String dateTime) {
 		getPosts().put(id, new Post(id, content, author, likes, shares, dateTime));
+		System.out.printf("%nPost successfully added!");
 	}
 
 	/**
