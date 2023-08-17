@@ -9,6 +9,7 @@ public class UI {
 								// again unnecessarily
 	private boolean quitState = false; // Reads whether the user has opted to quit
 	private Logic logic = new Logic(); // The class containing all the backend methods for social media post analysing
+	private int n; // The number of posts a user wants to select.
 
 	/**
 	 * Creates the menu interface and lets the user choose from the list of methods.
@@ -74,7 +75,7 @@ public class UI {
 
 				getLogic().addPost(id, content, author, likes, shares, dateTime);
 				break;
-			case "2": // Remove post
+			case "2": //TODO Remove post
 				System.out.printf("%nWhich post would you like to delete? (Or type \"Q\" to go back)");
 				System.out.printf("%n> ");
 				getUserChoice();
@@ -86,10 +87,16 @@ public class UI {
 				getLogic().retrievePost(Integer.valueOf(getUserChoice()));
 				break;
 			case "4": // Retrieve N posts by likes in descending order
-				getLogic().retrievePostsByLikes();
+				System.out.printf("%nHow many posts would you like to retrieve? (Or type \"Q\" to go back)");
+				System.out.printf("%n> ");
+				setUserChoice(getUserInput().next());
+				setN(Integer.valueOf(getUserChoice()));
+				getLogic().retrieveNPosts(getN(),"likes");
+				getLogic().ret
 				break;
 			case "5": // Retrieve N posts by shares in descending order
-				getLogic().retrievePostsByShares();
+				setN(Integer.valueOf(getUserChoice()));
+				getLogic().retrieveNPosts(getN(),"shares");
 				break;
 			case "q":
 			case "Q": // Quit
@@ -141,5 +148,13 @@ public class UI {
 
 	public void setLogic(Logic logic) {
 		this.logic = logic;
+	}
+
+	public int getN() {
+		return n;
+	}
+
+	public void setN(int n) {
+		this.n = n;
 	}
 }

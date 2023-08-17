@@ -71,6 +71,8 @@ public class Logic {
 	/**
 	 * Retrieves a post based on ID, throws an error if ID is not found in the
 	 * hashmap.
+	 * 
+	 * @param id
 	 */
 	public void retrievePost(int id) {
 		try {
@@ -84,15 +86,44 @@ public class Logic {
 	}
 
 	/**
+	 * Retrieves a user specified amount of posts, sorted by either likes or shares
+	 * based on the the flag.
 	 * 
+	 * @param n
+	 * @param flag
 	 */
-	public void retrieveNPosts(int n, String s) {
-		if (s.equals("likes")) {
-			for (Map.Entry<Integer, Post> set: posts.entrySet()) {
-				
+	public void retrieveNPosts(int n, String flag) {
+		HashMap<Integer, Post> tempPosts = getPosts();
+		if (n > getPosts().size()) {
+			n = getPosts().size();
+		}
+		Post currentHighest = null;
+		if (flag.equals("likes")) {
+			for (int i = 0; i < n; i++) {
+				for (Post key : tempPosts.values()) {
+					if (currentHighest == null) {
+						currentHighest = key;
+					} else if (currentHighest.getLikes() < key.getLikes()) {
+						currentHighest = key;
+					}
+				}
+				System.out.printf("%n" + currentHighest);
+				tempPosts.remove(currentHighest.getid());
+				currentHighest = null;
 			}
-		} else if (s.equals("shares")) {
-			
+		} else if (flag.equals("shares")) {
+			for (int i = 0; i < n; i++) {
+				for (Post key : tempPosts.values()) {
+					if (currentHighest == null) {
+						currentHighest = key;
+					} else if (currentHighest.getShares() < key.getShares()) {
+						currentHighest = key;
+					}
+				}
+				System.out.printf("%n" + currentHighest);
+				tempPosts.remove(currentHighest.getid());
+				currentHighest = null;
+			}
 		}
 	}
 
