@@ -9,6 +9,7 @@ import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.List;
+import java.util.Map;
 
 public class Logic {
 	private HashMap<Integer, Post> posts = new HashMap<Integer, Post>(); // The hashmap for all of the csv posts
@@ -85,13 +86,14 @@ public class Logic {
 	/**
 	 * 
 	 */
-	public void retrievePostsByLikes() {
-	}
-
-	/**
-	 * 
-	 */
-	public void retrievePostsByShares() {
+	public void retrieveNPosts(int n, String s) {
+		if (s.equals("likes")) {
+			for (Map.Entry<Integer, Post> set: posts.entrySet()) {
+				
+			}
+		} else if (s.equals("shares")) {
+			
+		}
 	}
 
 	public boolean dateTimeValidator(String dateTime) {
