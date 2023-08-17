@@ -45,7 +45,13 @@ public class Logic {
 	}
 
 	/**
-	 * Adds a post from user specifications.
+	 * Adds a post from input specifications.
+	 * @param id
+	 * @param content
+	 * @param author
+	 * @param likes
+	 * @param shares
+	 * @param dateTime
 	 */
 	public void addPost(int id, String content, String author, int likes, int shares, String dateTime) {
 		getPosts().put(id, new Post(id, content, author, likes, shares, dateTime));
@@ -53,7 +59,7 @@ public class Logic {
 	}
 
 	/**
-	 * Removes a post based on ID, throws an error if ID is not found in the
+	 * Removes a post based on ID, warns the user if the ID is not found in the
 	 * hashmap.
 	 */
 	public void removePost(int id) {
@@ -69,10 +75,12 @@ public class Logic {
 	}
 
 	/**
-	 * Retrieves a post based on ID, throws an error if ID is not found in the
-	 * hashmap.
+	 * Retrieves a post based on ID and prints the result. Or, if the post is not
+	 * found, prints a warning to the user.
 	 * 
 	 * @param id
+	 * @return The post requested by the user. Or returns null if the post isn't
+	 *         found.
 	 */
 	public void retrievePost(int id) {
 		try {
@@ -127,6 +135,14 @@ public class Logic {
 		}
 	}
 
+	/**
+	 * Checks the date and time of the string to ensure it matches a "d/M/yyyy
+	 * HH:mm" datetime format
+	 * 
+	 * @param dateTime
+	 * @return True if the date has been validated as the correct format. False if
+	 *         not.
+	 */
 	public boolean dateTimeValidator(String dateTime) {
 		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("d/M/yyyy HH:mm");
 		try {

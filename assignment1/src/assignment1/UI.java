@@ -64,7 +64,7 @@ public class UI {
 				System.out.printf("%n> ");
 				setUserChoice(getUserInput().next());
 				String dateTime = getUserChoice();
-				
+
 				System.out.printf("%nWhat time was it posted (In HH:MM format)?");
 				System.out.printf("%n> ");
 				setUserChoice(getUserInput().next());
@@ -75,7 +75,7 @@ public class UI {
 
 				getLogic().addPost(id, content, author, likes, shares, dateTime);
 				break;
-			case "2": //TODO Remove post
+			case "2": // TODO Remove post
 				System.out.printf("%nWhich post would you like to delete? (Or type \"Q\" to go back)");
 				System.out.printf("%n> ");
 				getUserChoice();
@@ -91,12 +91,11 @@ public class UI {
 				System.out.printf("%n> ");
 				setUserChoice(getUserInput().next());
 				setN(Integer.valueOf(getUserChoice()));
-				getLogic().retrieveNPosts(getN(),"likes");
-				getLogic().ret
+				getLogic().retrieveNPosts(getN(), "likes");
 				break;
 			case "5": // Retrieve N posts by shares in descending order
 				setN(Integer.valueOf(getUserChoice()));
-				getLogic().retrieveNPosts(getN(),"shares");
+				getLogic().retrieveNPosts(getN(), "shares");
 				break;
 			case "q":
 			case "Q": // Quit

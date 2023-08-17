@@ -2,14 +2,14 @@ package assignment1;
 
 import java.io.Serializable;
 
-public class Post implements Serializable{
+public class Post implements Serializable {
 	private int id;
 	private String content;
 	private String author;
 	private int likes;
 	private int shares;
 	private String dateTime;
-	
+
 	public Post(int id, String content, String author, int likes, int shares, String dateTime) {
 		this.id = id;
 		this.content = content;
@@ -18,7 +18,7 @@ public class Post implements Serializable{
 		this.shares = shares;
 		this.dateTime = dateTime;
 	}
-	
+
 	public int getid() {
 		return id;
 	}
@@ -66,8 +66,10 @@ public class Post implements Serializable{
 	public void setDateTime(String dateTime) {
 		this.dateTime = dateTime;
 	}
+
 	@Override
 	public String toString() {
-		return "ID: " + id + " Content: \"" + content + "\" Author: " + author + " Likes: " + likes + " Shares: " + shares + " Date/Time posted: " + dateTime;
+		return "ID: " + id + " Content: \"" + content + "\" Author: " + author + " Likes: " + likes + " Shares: "
+				+ shares + " Date/Time posted: " + dateTime;
 	}
 }
