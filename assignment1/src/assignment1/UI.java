@@ -3,6 +3,12 @@ package assignment1;
 import java.time.format.DateTimeParseException;
 import java.util.*;
 
+/**
+ * Provides a frontend for the logic object and prompts the user for input to
+ * choose a method using an input scanner. Based on the selection chosen,
+ * further user input is required to provide the logic method with more
+ * information.
+ */
 public class UI {
 	private Scanner userInput = new Scanner(System.in); // Reads input from the user in the console
 	private String userChoice; // Where the user's choice is stored so the program doesn't prompt the user

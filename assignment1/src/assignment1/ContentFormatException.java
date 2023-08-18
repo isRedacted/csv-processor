@@ -4,10 +4,15 @@
 package assignment1;
 
 /**
- * Exception triggered when user gives an input not in the list of choices in
- * the main menu
+ * Exception triggered when user inputs content into a new post but which
+ * contains a forbidden character.
  */
 public class ContentFormatException extends Exception {
+	/**
+	 * Generated serial UID
+	 */
+	private static final long serialVersionUID = -2708352986814084989L;
+
 	public ContentFormatException() {
 	}
 

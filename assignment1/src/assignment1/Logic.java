@@ -9,8 +9,11 @@ import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.List;
-import java.util.Map;
 
+/**
+ * Handles the logic of the program. Methods relate to reading the csv file and
+ * editing or retrieving posts in the posts HashMap.
+ */
 public class Logic {
 	private HashMap<Integer, Post> posts = new HashMap<Integer, Post>(); // The hashmap for all of the csv posts
 
@@ -45,7 +48,8 @@ public class Logic {
 	}
 
 	/**
-	 * Adds a post from input specifications.
+	 * Adds a post to the posts HashMap from input specifications.
+	 * 
 	 * @param id
 	 * @param content
 	 * @param author
@@ -75,8 +79,8 @@ public class Logic {
 	}
 
 	/**
-	 * Retrieves a post based on ID and prints the result. Or, if the post is not
-	 * found, prints a warning to the user.
+	 * Prints a post based on ID. Or, if the post is not found, prints a warning to
+	 * the user.
 	 * 
 	 * @param id
 	 * @return The post requested by the user. Or returns null if the post isn't
@@ -94,8 +98,12 @@ public class Logic {
 	}
 
 	/**
-	 * Retrieves a user specified amount of posts, sorted by either likes or shares
+	 * Prints a user specified amount of posts, sorted by either likes or shares
 	 * based on the the flag.
+	 * 
+	 * Compares each post within a temporary posts hashmap and selects a value,
+	 * printing it out and removing it from the temporary hashmap. Repeats until
+	 * user specification is satisfied or it runs out of posts.
 	 * 
 	 * @param n
 	 * @param flag
