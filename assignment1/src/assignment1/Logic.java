@@ -22,9 +22,9 @@ public class Logic {
 	 * post objects into the posts hashmap. Catches exceptions related to file not
 	 * found, and file improperly formatted.
 	 */
-	public void readFile() {
+	public void readFile(String filename) {
 		try {
-			List<String> readPosts = Files.readAllLines(Paths.get("posts.csv"));
+			List<String> readPosts = Files.readAllLines(Paths.get(filename));
 
 			if (!readPosts.get(0).equals("ID,content,author,likes,shares,date-time")) {
 				throw new FileFormatException();
@@ -41,10 +41,9 @@ public class Logic {
 		} catch (FileFormatException e) {
 			System.out.println(
 					"Error! One or more of the posts in the file was formatted incorrectly. Posts only partially loaded.");
-			e.printStackTrace();
 		} catch (IOException e) {
 			System.out.println("Error! File not found or file is corrupt. No posts were loaded.");
-		} // TODO: Catch exception for when a record is improperly formatted
+		}
 	}
 
 	/**
