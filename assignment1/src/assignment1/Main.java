@@ -5,11 +5,24 @@ package assignment1;
  * quitting when the quit state is set to true
  */
 public class Main {
+	private static UI ui = new UI();
+
 	public static void main(String args[]) {
-		UI ui = new UI();
-		ui.getLogic().readFile();
+		getUI().getLogic().readFile();
+		run();
+	}
+
+	public static void run() {
 		while (!ui.getQuitState()) {
 			ui.mainMenu();
 		}
+	}
+
+	public static UI getUI() {
+		return ui;
+	}
+
+	public void setUI(UI ui) {
+		Main.ui = ui;
 	}
 }
