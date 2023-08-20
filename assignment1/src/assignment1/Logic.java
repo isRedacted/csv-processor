@@ -22,11 +22,11 @@ public class Logic {
 	 * post objects into the posts hashmap. Catches exceptions related to file not
 	 * found, and file improperly formatted.
 	 */
-	public void readFile(String filename) {
+	public void readFile(String filename, String format) {
 		try {
 			List<String> readPosts = Files.readAllLines(Paths.get(filename));
 
-			if (!readPosts.get(0).equals("ID,content,author,likes,shares,date-time")) {
+			if (!readPosts.get(0).equals(format)) {
 				throw new FileFormatException();
 			}
 
@@ -40,7 +40,7 @@ public class Logic {
 
 		} catch (FileFormatException e) {
 			System.err.println(
-					"Error! One or more of the posts in the file was formatted incorrectly. Posts only partially loaded.");
+					"Error! The file was formatted incorrectly. No posts were loaded.");
 		} catch (IOException e) {
 			System.err.println("Error! File not found or file is corrupt. No posts were loaded.");
 		}

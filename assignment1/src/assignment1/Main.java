@@ -8,7 +8,7 @@ public class Main {
 	private static UI ui = new UI();
 
 	public static void main(String args[]) {
-		getUI().getLogic().readFile("posts.csv");
+		getUI().getLogic().readFile("posts.csv", "ID,content,author,likes,shares,date-time");
 		run();
 	}
 
