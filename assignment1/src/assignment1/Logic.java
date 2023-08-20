@@ -39,10 +39,10 @@ public class Logic {
 			}
 
 		} catch (FileFormatException e) {
-			System.out.println(
+			System.err.println(
 					"Error! One or more of the posts in the file was formatted incorrectly. Posts only partially loaded.");
 		} catch (IOException e) {
-			System.out.println("Error! File not found or file is corrupt. No posts were loaded.");
+			System.err.println("Error! File not found or file is corrupt. No posts were loaded.");
 		}
 	}
 
@@ -73,7 +73,7 @@ public class Logic {
 			getPosts().remove(id);
 			System.out.printf("%nPost " + id + " has been deleted!");
 		} catch (NullPointerException | InputMismatchException e) {
-			System.out.printf("%nThat post wasn't found!");
+			System.err.println("That post wasn't found!");
 		}
 	}
 
@@ -92,7 +92,7 @@ public class Logic {
 			}
 			System.out.print(getPosts().get(id));
 		} catch (NullPointerException e) {
-			System.out.printf("%nThat post wasn't found!");
+			System.out.println("That post wasn't found!");
 		}
 	}
 
