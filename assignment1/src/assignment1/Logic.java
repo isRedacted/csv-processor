@@ -43,6 +43,8 @@ public class Logic {
 					"Error! The file was formatted incorrectly. No posts were loaded.");
 		} catch (IOException e) {
 			System.err.println("Error! File not found or file is corrupt. No posts were loaded.");
+		} catch (ArrayIndexOutOfBoundsException e) {
+			System.err.println("Error! One or more posts aren't formatted correctly. Posts partially loaded.");
 		}
 	}
 
