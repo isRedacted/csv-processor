@@ -15,7 +15,6 @@ public class UI {
 								// again unnecessarily
 	private boolean quitState = false; // Reads whether the user has opted to quit
 	private Logic logic = new Logic(); // The class containing all the backend methods for social media post analysing
-	private int n; // The number of posts a user wants to select.
 
 	/**
 	 * Creates the menu interface and lets the user choose from the list of methods.
@@ -38,89 +37,115 @@ public class UI {
 
 			switch (getUserChoice()) {
 			case "1": // Add post
-				System.out.printf("%nWhat is the ID?");
-				System.out.printf("%n> ");
-				setUserChoice(getUserInput().next());
-				int id = Integer.valueOf(getUserChoice());
-
-				System.out.printf("%nWhat is the content of the post?");
-				System.out.printf("%n> ");
-				setUserChoice(getUserInput().next());
-				if (getUserChoice().contains(",")) {
-					throw new ContentFormatException();
-				}
-				String content = getUserChoice();
-
-				System.out.printf("%nWho is the author?");
-				System.out.printf("%n> ");
-				setUserChoice(getUserInput().next());
-				String author = getUserChoice();
-
-				System.out.printf("%nHow many likes does this post have?");
-				System.out.printf("%n> ");
-				setUserChoice(getUserInput().next());
-				int likes = Integer.valueOf(getUserChoice());
-
-				System.out.printf("%nHow many shares does this post have?");
-				System.out.printf("%n> ");
-				setUserChoice(getUserInput().next());
-				int shares = Integer.valueOf(getUserChoice());
-
-				System.out.printf("%nWhat is the date of the post (In DD/MM/YYYY format)?");
-				System.out.printf("%n> ");
-				setUserChoice(getUserInput().next());
-				String dateTime = getUserChoice();
-
-				System.out.printf("%nWhat time was it posted (In HH:MM format)?");
-				System.out.printf("%n> ");
-				setUserChoice(getUserInput().next());
-				dateTime += " " + getUserChoice();
-				if (!getLogic().dateTimeValidator(dateTime)) {
-					throw new DateTimeParseException(null, dateTime, 0);
-				}
-
-				getLogic().addPost(id, content, author, likes, shares, dateTime);
+				addPost();
 				break;
-			case "2": // TODO Remove post
-				System.out.printf("%nWhich post would you like to delete? (Or type \"Q\" to go back)");
-				System.out.printf("%n> ");
-				getUserChoice();
+			case "2": // Remove post
+				removePost();
 				break;
 			case "3": // Retrieve post
-				System.out.printf("%nWhich post would you like to retrieve? (Or type \"Q\" to go back)");
-				System.out.printf("%n> ");
-				setUserChoice(getUserInput().next());
-				getLogic().retrievePost(Integer.valueOf(getUserChoice()));
+				retrievePost();
 				break;
 			case "4": // Retrieve N posts by likes in descending order
-				System.out.printf("%nHow many posts would you like to retrieve? (Or type \"Q\" to go back)");
-				System.out.printf("%n> ");
-				setUserChoice(getUserInput().next());
-				setN(Integer.valueOf(getUserChoice()));
-				getLogic().retrieveNPosts(getN(), "likes");
+				retrieveNPosts("likes");
 				break;
 			case "5": // Retrieve N posts by shares in descending order
-				setN(Integer.valueOf(getUserChoice()));
-				getLogic().retrieveNPosts(getN(), "shares");
+				retrieveNPosts("shares");
 				break;
 			case "q":
 			case "Q": // Quit
 				setQuitState(true);
 				break;
 			default:
-				System.out.println("Executed");
 				throw new BadUserInputException();
 			}
 		} catch (BadUserInputException e) {
-			e.printStackTrace();
-			System.out.printf("Please only choose from the shown menu items!");
+			System.err.println("Please only choose from the shown menu items!");
 		} catch (NumberFormatException e) {
-			System.out.printf("Please only type numbers for that choice!");
+			System.err.println("Please only type numbers for that choice!");
 		} catch (DateTimeParseException e) {
-			System.out.printf("Please enter a valid date/time in the required format!");
+			System.err.println("Please enter a valid date/time in the required format!");
 		} catch (ContentFormatException e) {
-			System.out.printf("Please make sure the post content doesn't include a comma!");
+			System.err.println("Please make sure the post content doesn't include a comma!");
+		} catch (DuplicatePostException e) {
+			System.err.println("That post already exists!");
+		} catch (NullPointerException e) {
+			System.err.println("That post wasn't found!");
 		}
+	}
+
+	public void addPost() throws DuplicatePostException, ContentFormatException {
+		System.out.printf("%nWhat is the ID?");
+		System.out.printf("%n> ");
+		setUserChoice(getUserInput().next());
+		int id = Integer.valueOf(getUserChoice());
+		try {
+			logic.retrievePost(id);
+		} catch (NullPointerException e) {
+			throw new DuplicatePostException();
+		}
+
+		System.out.printf("%nWhat is the content of the post?");
+		System.out.printf("%n> ");
+		setUserChoice(getUserInput().next());
+		if (getUserChoice().contains(",")) {
+			throw new ContentFormatException();
+		}
+		String content = getUserChoice();
+
+		System.out.printf("%nWho is the author?");
+		System.out.printf("%n> ");
+		setUserChoice(getUserInput().next());
+		String author = getUserChoice();
+
+		System.out.printf("%nHow many likes does this post have?");
+		System.out.printf("%n> ");
+		setUserChoice(getUserInput().next());
+		int likes = Integer.valueOf(getUserChoice());
+
+		System.out.printf("%nHow many shares does this post have?");
+		System.out.printf("%n> ");
+		setUserChoice(getUserInput().next());
+		int shares = Integer.valueOf(getUserChoice());
+
+		System.out.printf("%nWhat is the date of the post (In DD/MM/YYYY format)?");
+		System.out.printf("%n> ");
+		setUserChoice(getUserInput().next());
+		String dateTime = getUserChoice();
+
+		System.out.printf("%nWhat time was it posted (In HH:MM format)?");
+		System.out.printf("%n> ");
+		setUserChoice(getUserInput().next());
+		dateTime += " " + getUserChoice();
+		if (!getLogic().dateTimeValidator(dateTime)) {
+			throw new DateTimeParseException(null, dateTime, 0);
+		}
+
+		getLogic().addPost(id, content, author, likes, shares, dateTime);
+	}
+
+	public void removePost() {
+		System.out.printf("%nWhich post would you like to delete? (Or type \"Q\" to go back)");
+		System.out.printf("%n> ");
+		setUserChoice(getUserInput().next());
+		int id = Integer.valueOf(getUserChoice());
+		logic.removePost(id);
+		System.out.printf("%nPost number " + id + " deleted");
+	}
+
+	public void retrievePost() {
+		System.out.printf("%nWhich post would you like to retrieve? (Or type \"Q\" to go back)");
+		System.out.printf("%n> ");
+		setUserChoice(getUserInput().next());
+		int id = Integer.valueOf(getUserChoice());
+		System.out.printf("%n" + logic.retrievePost(id));
+	}
+
+	public void retrieveNPosts(String flag) {
+		System.out.printf("%nHow many posts would you like to retrieve? (Or type \"Q\" to go back)");
+		System.out.printf("%n> ");
+		setUserChoice(getUserInput().next());
+		int n = Integer.valueOf(getUserChoice());
+		getLogic().retrieveNPosts(n, flag);
 	}
 
 	public boolean getQuitState() {
@@ -153,13 +178,5 @@ public class UI {
 
 	public void setLogic(Logic logic) {
 		this.logic = logic;
-	}
-
-	public int getN() {
-		return n;
-	}
-
-	public void setN(int n) {
-		this.n = n;
 	}
 }
