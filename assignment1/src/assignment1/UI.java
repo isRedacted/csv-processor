@@ -1,7 +1,7 @@
 package assignment1;
 
 import java.time.format.DateTimeParseException;
-import java.util.*;
+import java.util.Scanner;
 
 /**
  * Provides a frontend for the logic object and prompts the user for input to
