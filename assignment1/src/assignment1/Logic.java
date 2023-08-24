@@ -67,15 +67,11 @@ public class Logic {
 	 * hashmap.
 	 */
 	public void removePost(int id) {
-		try {
-			if (getPosts().get(id) == null) {
-				throw new NullPointerException();
-			}
-			getPosts().remove(id);
-			System.out.printf("%nPost " + id + " has been deleted!");
-		} catch (NullPointerException e) {
-			System.err.println("That post wasn't found!");
+		if (getPosts().get(id) == null) {
+			throw new NullPointerException();
 		}
+		getPosts().remove(id);
+		System.out.printf("%nPost " + id + " has been deleted!");
 	}
 
 	/**
@@ -83,7 +79,8 @@ public class Logic {
 	 * the user.
 	 * 
 	 * @param id
-	 * @return The post requested as per the ID, otherwise throws a NullPointerException
+	 * @return The post requested as per the ID, otherwise throws a
+	 *         NullPointerException
 	 */
 	public Post retrievePost(int id) {
 		if (getPosts().get(id) == null) {
