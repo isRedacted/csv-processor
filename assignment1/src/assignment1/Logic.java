@@ -68,9 +68,9 @@ public class Logic {
 	public void removePost(int id) {
 		if (getPosts().get(id) == null) {
 			throw new NullPointerException();
+		} else {
+			getPosts().remove(id);
 		}
-		getPosts().remove(id);
-		System.out.printf("%nPost " + id + " has been deleted!");
 	}
 
 	/**
