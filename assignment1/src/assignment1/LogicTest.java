@@ -32,9 +32,6 @@ public class LogicTest {
 		System.setOut(System.out);
 	}
 
-	/*
-	 * readFile() tests
-	 */
 	@Test
 	public void testReadFile_FileNotFound() {
 		logic.readFile("", "ID,content,author,likes,shares,date-time");
