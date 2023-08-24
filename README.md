@@ -12,7 +12,6 @@ javac -classpath junit.jar:hamcrest.jar -d bin ./src/assignment1/*.java
 javac -classpath junit.jar;hamcrest.jar -d bin src/assignment1/*.java
 
 5. Navigate to the bin folder
-
 6. Run with:
 java assignment1.Main
 
