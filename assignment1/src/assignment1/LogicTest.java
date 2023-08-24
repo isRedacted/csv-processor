@@ -4,10 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -35,13 +31,15 @@ public class LogicTest {
 	@Test
 	public void testReadFile_FileNotFound() {
 		logic.readFile("", "ID,content,author,likes,shares,date-time");
-		assertEquals("Error! File not found or file is corrupt. No posts were loaded.\r\n", errorMessage.toString());
+		assertEquals("Error! File not found or file is corrupt. No posts were loaded.\n"
+				+ "", errorMessage.toString());
 	}
 
 	@Test
 	public void testReadFile_FileFormatError() {
 		logic.readFile("posts.csv", "");
-		assertEquals("Error! The file was formatted incorrectly. No posts were loaded.\r\n", errorMessage.toString());
+		assertEquals("Error! The file was formatted incorrectly. No posts were loaded.\n"
+				+ "", errorMessage.toString());
 	}
 
 	@Test
@@ -49,7 +47,30 @@ public class LogicTest {
 		logic.readFile("posts.csv", "ID,content,author,likes,shares,date-time");
 		assertEquals("", errorMessage.toString());
 	}
-
+	
+	@Test (expected = NullPointerException.class)
+	public void testRetrievePost_NullPointer() {
+		logic.retrievePost(-1);
+	}
+	
+	@Test
+	public void testRetrievePost_Succeed() {
+		logic.getPosts().put(1, new Post(1, null, null, 0, 0, null));
+		assertEquals("ID: 1 Content: \"null\" Author: null Likes: 0 Shares: 0 Date/Time posted: null", logic.retrievePost(1).toString());
+	}
+	
+	@Test (expected = NullPointerException.class)
+	public void testDeletePost_NullPointer() {
+		logic.removePost(-1);
+	}
+	
+	@Test
+	public void testDeletePost_Succeed() {
+		logic.getPosts().put(1, new Post(1, null, null, 0, 0, null));
+		logic.removePost(1);
+		assertEquals(logic.getPosts().get(1), null);
+	}
+	
 	@Test
 	public void testRetrieveNPosts_SortedListLikes() {
 		logic.getPosts().put(1, new Post(1, "", "", 1, 2, "1/01/2023 12:12"));
