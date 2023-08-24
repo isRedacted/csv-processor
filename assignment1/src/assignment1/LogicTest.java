@@ -16,6 +16,7 @@ public class LogicTest {
 	private Logic logic;
 	private ByteArrayOutputStream errorMessage;
 	private ByteArrayOutputStream outputMessage;
+	private ArrayList<Post> manualSort;
 
 	@Before
 	public void setUp() {
@@ -75,7 +76,7 @@ public class LogicTest {
 		logic.getPosts().put(1, new Post(1, "", "", 1, 3, "1/01/2023 12:12"));
 		logic.getPosts().put(2, new Post(2, "", "", 2, 2, "1/01/2023 12:12"));
 		logic.getPosts().put(3, new Post(3, "", "", 3, 1, "1/01/2023 12:12"));
-		ArrayList<Post> manualSort = new ArrayList<Post>();
+		manualSort = new ArrayList<Post>();
 		manualSort.add(logic.getPosts().get(3));
 		manualSort.add(logic.getPosts().get(2));
 		assertEquals(logic.retrieveNPosts(2, "likes"), manualSort);
@@ -86,7 +87,7 @@ public class LogicTest {
 		logic.getPosts().put(1, new Post(1, "", "", 1, 3, "1/01/2023 12:12"));
 		logic.getPosts().put(2, new Post(2, "", "", 2, 2, "1/01/2023 12:12"));
 		logic.getPosts().put(3, new Post(3, "", "", 3, 1, "1/01/2023 12:12"));
-		ArrayList<Post> manualSort = new ArrayList<Post>();
+		manualSort = new ArrayList<Post>();
 		manualSort.add(logic.getPosts().get(1));
 		manualSort.add(logic.getPosts().get(2));
 		assertEquals(logic.retrieveNPosts(2, "shares"), manualSort);
@@ -97,7 +98,7 @@ public class LogicTest {
 		logic.getPosts().put(1, new Post(1, "", "", 1, 3, "1/01/2023 12:12"));
 		logic.getPosts().put(2, new Post(2, "", "", 2, 2, "1/01/2023 12:12"));
 		logic.getPosts().put(3, new Post(3, "", "", 3, 1, "1/01/2023 12:12"));
-		ArrayList<Post> manualSort = new ArrayList<Post>();
+		manualSort = new ArrayList<Post>();
 		manualSort.add(logic.getPosts().get(3));
 		manualSort.add(logic.getPosts().get(2));
 		manualSort.add(logic.getPosts().get(1));
@@ -109,7 +110,7 @@ public class LogicTest {
 		logic.getPosts().put(1, new Post(1, "", "", 1, 3, "1/01/2023 12:12"));
 		logic.getPosts().put(2, new Post(2, "", "", 2, 2, "1/01/2023 12:12"));
 		logic.getPosts().put(3, new Post(3, "", "", 3, 1, "1/01/2023 12:12"));
-		ArrayList<Post> manualSort = new ArrayList<Post>();
+		manualSort = new ArrayList<Post>();
 		manualSort.add(logic.getPosts().get(2));
 		manualSort.add(logic.getPosts().get(1));
 		logic.retrieveNPosts(-1, "likes");
