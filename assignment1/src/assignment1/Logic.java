@@ -6,6 +6,7 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -20,9 +21,10 @@ public class Logic {
 	 * Reads the posts.csv file, splits it by the comma delimiter, and creates new
 	 * post objects into the posts hashmap. Catches exceptions related to file not
 	 * found, and file improperly formatted.
+	 * @throws FileFormatException 
+	 * @throws IOException 
 	 */
-	public void readFile(String filename, String format) {
-		try {
+	public void readFile(String filename, String format) throws FileFormatException, IOException {
 			List<String> readPosts = Files.readAllLines(Paths.get(filename));
 
 			if (!readPosts.get(0).equals(format)) {
@@ -36,14 +38,6 @@ public class Logic {
 						Integer.parseInt(splitPost[3]), Integer.parseInt(splitPost[4]), splitPost[5]);
 				posts.put(newPost.getid(), newPost);
 			}
-
-		} catch (FileFormatException e) {
-			System.err.println("Error! The file was formatted incorrectly. No posts were loaded.");
-		} catch (IOException e) {
-			System.err.println("Error! File not found or file is corrupt. No posts were loaded.");
-		} catch (ArrayIndexOutOfBoundsException e) {
-			System.err.println("Error! One or more posts aren't formatted correctly. Posts partially loaded.");
-		}
 	}
 
 	/**
@@ -64,6 +58,9 @@ public class Logic {
 	/**
 	 * Removes a post based on ID, warns the user if the ID is not found in the
 	 * hashmap.
+	 * @param id
+	 * @return The post requested as per the ID, otherwise throws a
+	 *         NullPointerException
 	 */
 	public void removePost(int id) {
 		if (getPosts().get(id) == null) {
@@ -100,8 +97,12 @@ public class Logic {
 	 * @param n
 	 * @param flag
 	 */
-	public void retrieveNPosts(int n, String flag) {
+	public ArrayList<Post> retrieveNPosts(int n, String flag) {
 		HashMap<Integer, Post> tempPosts = getPosts();
+		ArrayList<Post> topPosts = new ArrayList<Post>();
+		if (n <= 0) {
+			throw new NumberFormatException();
+		}
 		if (n > getPosts().size()) {
 			n = getPosts().size();
 		}
@@ -115,7 +116,8 @@ public class Logic {
 						currentHighest = key;
 					}
 				}
-				System.out.printf("%n" + currentHighest);
+				topPosts.add(currentHighest);
+				// System.out.printf("%n" + currentHighest);
 				tempPosts.remove(currentHighest.getid());
 				currentHighest = null;
 			}
@@ -128,11 +130,13 @@ public class Logic {
 						currentHighest = key;
 					}
 				}
-				System.out.printf("%n" + currentHighest);
+				topPosts.add(currentHighest);
+				// System.out.printf("%n" + currentHighest);
 				tempPosts.remove(currentHighest.getid());
 				currentHighest = null;
 			}
 		}
+		return topPosts;
 	}
 
 	/**

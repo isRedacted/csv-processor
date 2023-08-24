@@ -61,7 +61,7 @@ public class UI {
 		} catch (BadUserInputException e) {
 			System.err.println("Please only choose from the shown menu items!");
 		} catch (NumberFormatException e) {
-			System.err.println("Please only type numbers for that choice!");
+			System.err.println("Please only type correct numbers for that choice!");
 		} catch (DateTimeParseException e) {
 			System.err.println("Please enter a valid date/time in the required format!");
 		} catch (ContentFormatException e) {
@@ -145,7 +145,7 @@ public class UI {
 		System.out.printf("%n> ");
 		setUserChoice(getUserInput().next());
 		int n = Integer.valueOf(getUserChoice());
-		getLogic().retrieveNPosts(n, flag);
+		getLogic().retrieveNPosts(n, flag).forEach((x) -> System.out.printf("%n" + x));;
 	}
 
 	public boolean getQuitState() {

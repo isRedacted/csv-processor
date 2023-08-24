@@ -4,10 +4,13 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.io.IOException;
 
 public class LogicTest {
 	private Logic logic;
@@ -29,80 +32,87 @@ public class LogicTest {
 		System.setOut(System.out);
 	}
 
-	@Test
-	public void testReadFile_FileNotFound() {
+	@Test(expected = IOException.class)
+	public void testReadFile_FileNotFound() throws FileFormatException, IOException {
 		logic.readFile("", "ID,content,author,likes,shares,date-time");
-		assertEquals("Error! File not found or file is corrupt. No posts were loaded.\n"
-				+ "", errorMessage.toString());
 	}
 
-	@Test
-	public void testReadFile_FileFormatError() {
+	@Test(expected = FileFormatException.class)
+	public void testReadFile_FileFormatError() throws FileFormatException, IOException {
 		logic.readFile("posts.csv", "");
-		assertEquals("Error! The file was formatted incorrectly. No posts were loaded.\n"
-				+ "", errorMessage.toString());
 	}
 
 	@Test
-	public void testReadFile_FileFound() {
+	public void testReadFile_FileFound() throws FileFormatException, IOException {
 		logic.readFile("posts.csv", "ID,content,author,likes,shares,date-time");
-		assertEquals("", errorMessage.toString());
 	}
-	
-	@Test (expected = NullPointerException.class)
+
+	@Test(expected = NullPointerException.class)
 	public void testRetrievePost_NullPointer() {
 		logic.retrievePost(-1);
 	}
-	
+
 	@Test
 	public void testRetrievePost_Succeed() {
 		logic.getPosts().put(1, new Post(1, null, null, 0, 0, null));
-		assertEquals("ID: 1 Content: \"null\" Author: null Likes: 0 Shares: 0 Date/Time posted: null", logic.retrievePost(1).toString());
+		assertEquals(logic.retrievePost(1), logic.getPosts().get(1));
 	}
-	
-	@Test (expected = NullPointerException.class)
+
+	@Test(expected = NullPointerException.class)
 	public void testDeletePost_NullPointer() {
 		logic.removePost(-1);
 	}
-	
+
 	@Test
 	public void testDeletePost_Succeed() {
 		logic.getPosts().put(1, new Post(1, null, null, 0, 0, null));
 		logic.removePost(1);
 		assertEquals(logic.getPosts().get(1), null);
 	}
-	
+
 	@Test
 	public void testRetrieveNPosts_SortedListLikes() {
-		logic.getPosts().put(1, new Post(1, "", "", 1, 2, "1/01/2023 12:12"));
-		logic.getPosts().put(2, new Post(2, "", "", 2, 1, "1/01/2023 12:12"));
-		logic.retrieveNPosts(2, "likes");
-		assertEquals(
-				"\n" + "ID: 2 Content: \"\" Author:  Likes: 2 Shares: 1 Date/Time posted: 1/01/2023 12:12\n"
-						+ "ID: 1 Content: \"\" Author:  Likes: 1 Shares: 2 Date/Time posted: 1/01/2023 12:12",
-				outputMessage.toString());
+		logic.getPosts().put(1, new Post(1, "", "", 1, 3, "1/01/2023 12:12"));
+		logic.getPosts().put(2, new Post(2, "", "", 2, 2, "1/01/2023 12:12"));
+		logic.getPosts().put(3, new Post(3, "", "", 3, 1, "1/01/2023 12:12"));
+		ArrayList<Post> manualSort = new ArrayList<Post>();
+		manualSort.add(logic.getPosts().get(3));
+		manualSort.add(logic.getPosts().get(2));
+		assertEquals(logic.retrieveNPosts(2, "likes"), manualSort);
 	}
 
 	@Test
 	public void testRetrieveNPosts_SortedListShares() {
-		logic.getPosts().put(1, new Post(1, "", "", 2, 1, "1/01/2023 12:12"));
-		logic.getPosts().put(2, new Post(2, "", "", 1, 2, "1/01/2023 12:12"));
-		logic.retrieveNPosts(2, "shares");
-		assertEquals(
-				"\n" + "ID: 2 Content: \"\" Author:  Likes: 1 Shares: 2 Date/Time posted: 1/01/2023 12:12\n"
-						+ "ID: 1 Content: \"\" Author:  Likes: 2 Shares: 1 Date/Time posted: 1/01/2023 12:12",
-				outputMessage.toString());
+		logic.getPosts().put(1, new Post(1, "", "", 1, 3, "1/01/2023 12:12"));
+		logic.getPosts().put(2, new Post(2, "", "", 2, 2, "1/01/2023 12:12"));
+		logic.getPosts().put(3, new Post(3, "", "", 3, 1, "1/01/2023 12:12"));
+		ArrayList<Post> manualSort = new ArrayList<Post>();
+		manualSort.add(logic.getPosts().get(1));
+		manualSort.add(logic.getPosts().get(2));
+		assertEquals(logic.retrieveNPosts(2, "shares"), manualSort);
 	}
 
 	@Test
 	public void testRetrieveNPosts_SortedListLikesExceedMaximum() {
-		logic.getPosts().put(1, new Post(1, "", "", 1, 2, "1/01/2023 12:12"));
-		logic.getPosts().put(2, new Post(2, "", "", 2, 1, "1/01/2023 12:12"));
-		logic.retrieveNPosts(3, "likes");
-		assertEquals(
-				"\n" + "ID: 2 Content: \"\" Author:  Likes: 2 Shares: 1 Date/Time posted: 1/01/2023 12:12\n"
-						+ "ID: 1 Content: \"\" Author:  Likes: 1 Shares: 2 Date/Time posted: 1/01/2023 12:12",
-				outputMessage.toString());
+		logic.getPosts().put(1, new Post(1, "", "", 1, 3, "1/01/2023 12:12"));
+		logic.getPosts().put(2, new Post(2, "", "", 2, 2, "1/01/2023 12:12"));
+		logic.getPosts().put(3, new Post(3, "", "", 3, 1, "1/01/2023 12:12"));
+		ArrayList<Post> manualSort = new ArrayList<Post>();
+		manualSort.add(logic.getPosts().get(3));
+		manualSort.add(logic.getPosts().get(2));
+		manualSort.add(logic.getPosts().get(1));
+		assertEquals(logic.retrieveNPosts(4, "likes"), manualSort);
+	}
+
+	@Test(expected = NumberFormatException.class)
+	public void testRetrieveNPosts_InvalidNumber() {
+		logic.getPosts().put(1, new Post(1, "", "", 1, 3, "1/01/2023 12:12"));
+		logic.getPosts().put(2, new Post(2, "", "", 2, 2, "1/01/2023 12:12"));
+		logic.getPosts().put(3, new Post(3, "", "", 3, 1, "1/01/2023 12:12"));
+		ArrayList<Post> manualSort = new ArrayList<Post>();
+		manualSort.add(logic.getPosts().get(2));
+		manualSort.add(logic.getPosts().get(1));
+		logic.retrieveNPosts(-1, "likes");
 	}
 
 	@Test
