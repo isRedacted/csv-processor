@@ -1,1 +1,0 @@
-typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"assignment1","l":"BadUserInputException"},{"p":"assignment1","l":"ContentFormatException"},{"p":"assignment1","l":"FileFormatException"},{"p":"assignment1","l":"Logic"},{"p":"assignment1","l":"Main"},{"p":"assignment1","l":"Post"},{"p":"assignment1","l":"UI"}];updateSearchResults();
