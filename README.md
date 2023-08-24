@@ -8,15 +8,15 @@
 ### Linux (Tested on Mint)
 javac -classpath junit.jar:hamcrest.jar -d bin ./src/assignment1/*.java
 
-Navigate to the bin folder
+### Windows
+javac -classpath junit.jar;hamcrest.jar -d bin src/assignment1/*.java
 
+5. Navigate to the bin folder
+
+6. Run with:
 java assignment1.Main
 
-### Windows
-
 ## But what if it still doesn't work!?
-Then either I screwed up my instructions or you screwed up your compiling. Not to worry, though, you can run the included pre-compiled EmergencyMain.jar file inside the bin folder with the command:
+Then either I screwed up my instructions or you screwed up your compiling. Not to worry, though, you can run the included pre-compiled EmergencyMain.jar (Compiled for =>JavaSE-1.8) file inside the bin folder with the command:
 
 java -jar EmergencyMain.jar
-
-(Compiled for >JavaSE-1.8)
