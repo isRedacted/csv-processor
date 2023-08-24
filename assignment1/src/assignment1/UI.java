@@ -129,7 +129,7 @@ public class UI {
 		System.out.printf("%n> ");
 		setUserChoice(getUserInput().next());
 	}
-	
+
 	public void retrievePost() {
 		System.out.printf("%nWhich post would you like to retrieve? (Or type \"Q\" to go back)");
 		System.out.printf("%n> ");
@@ -137,7 +137,7 @@ public class UI {
 		int id = Integer.valueOf(getUserChoice());
 		System.out.printf("%n" + logic.retrievePost(id));
 	}
-	
+
 	public void retrieveNPosts(String flag) {
 		System.out.printf("%nHow many posts would you like to retrieve? (Or type \"Q\" to go back)");
 		System.out.printf("%n> ");
@@ -145,7 +145,7 @@ public class UI {
 		setN(Integer.valueOf(getUserChoice()));
 		getLogic().retrieveNPosts(getN(), flag);
 	}
-	
+
 	public boolean getQuitState() {
 		return quitState;
 	}
