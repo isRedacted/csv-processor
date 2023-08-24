@@ -16,7 +16,6 @@ public class UI {
 	private boolean quitState = false; // Reads whether the user has opted to quit
 	private Logic logic = new Logic(); // The class containing all the backend methods for social media post analysing
 	private int n; // The number of posts a user wants to select.
-
 	/**
 	 * Creates the menu interface and lets the user choose from the list of methods.
 	 */
@@ -41,7 +40,10 @@ public class UI {
 				System.out.printf("%nWhat is the ID?");
 				System.out.printf("%n> ");
 				setUserChoice(getUserInput().next());
-				int id = Integer.valueOf(getUserChoice());
+				int inputID = Integer.valueOf(getUserChoice());
+				if (logic.retrievePost(inputID) == null) {
+					throw new DuplicatePostException();
+				}
 
 				System.out.printf("%nWhat is the content of the post?");
 				System.out.printf("%n> ");
@@ -79,18 +81,22 @@ public class UI {
 					throw new DateTimeParseException(null, dateTime, 0);
 				}
 
-				getLogic().addPost(id, content, author, likes, shares, dateTime);
+				getLogic().addPost(inputID, content, author, likes, shares, dateTime);
 				break;
 			case "2": // TODO Remove post
 				System.out.printf("%nWhich post would you like to delete? (Or type \"Q\" to go back)");
 				System.out.printf("%n> ");
-				getUserChoice();
+				setUserChoice(getUserInput().next());
+				if(logic.retrievePost(Integer.valueOf(getUserChoice())) == null) {
+					throw new NullPointerException();
+				}
 				break;
 			case "3": // Retrieve post
 				System.out.printf("%nWhich post would you like to retrieve? (Or type \"Q\" to go back)");
 				System.out.printf("%n> ");
 				setUserChoice(getUserInput().next());
-				getLogic().retrievePost(Integer.valueOf(getUserChoice()));
+				int retrieveID = Integer.valueOf(getUserChoice());
+				System.out.printf("%n" + logic.retrievePost(retrieveID));
 				break;
 			case "4": // Retrieve N posts by likes in descending order
 				System.out.printf("%nHow many posts would you like to retrieve? (Or type \"Q\" to go back)");
@@ -108,18 +114,18 @@ public class UI {
 				setQuitState(true);
 				break;
 			default:
-				System.out.println("Executed");
 				throw new BadUserInputException();
 			}
 		} catch (BadUserInputException e) {
-			e.printStackTrace();
-			System.out.printf("Please only choose from the shown menu items!");
+			System.err.println("Please only choose from the shown menu items!");
 		} catch (NumberFormatException e) {
-			System.out.printf("Please only type numbers for that choice!");
+			System.err.println("Please only type numbers for that choice!");
 		} catch (DateTimeParseException e) {
-			System.out.printf("Please enter a valid date/time in the required format!");
+			System.err.println("Please enter a valid date/time in the required format!");
 		} catch (ContentFormatException e) {
-			System.out.printf("Please make sure the post content doesn't include a comma!");
+			System.err.println("Please make sure the post content doesn't include a comma!");
+		} catch (DuplicatePostException e) {
+			System.err.println("That post already exists!");
 		}
 	}
 

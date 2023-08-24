@@ -39,8 +39,7 @@ public class Logic {
 			}
 
 		} catch (FileFormatException e) {
-			System.err.println(
-					"Error! The file was formatted incorrectly. No posts were loaded.");
+			System.err.println("Error! The file was formatted incorrectly. No posts were loaded.");
 		} catch (IOException e) {
 			System.err.println("Error! File not found or file is corrupt. No posts were loaded.");
 		} catch (ArrayIndexOutOfBoundsException e) {
@@ -74,28 +73,21 @@ public class Logic {
 			}
 			getPosts().remove(id);
 			System.out.printf("%nPost " + id + " has been deleted!");
-		} catch (NullPointerException | InputMismatchException e) {
+		} catch (NullPointerException e) {
 			System.err.println("That post wasn't found!");
 		}
 	}
 
 	/**
-	 * Prints a post based on ID. Or, if the post is not found, prints a warning to
+	 * Returns a post based on ID. Or, if the post is not found, prints a warning to
 	 * the user.
 	 * 
 	 * @param id
 	 * @return The post requested by the user. Or returns null if the post isn't
 	 *         found.
 	 */
-	public void retrievePost(int id) {
-		try {
-			if (getPosts().get(id) == null) {
-				throw new NullPointerException();
-			}
-			System.out.print(getPosts().get(id));
-		} catch (NullPointerException e) {
-			System.out.println("That post wasn't found!");
-		}
+	public Post retrievePost(int id) {
+		return (getPosts().get(id));
 	}
 
 	/**
