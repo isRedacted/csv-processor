@@ -83,11 +83,14 @@ public class Logic {
 	 * the user.
 	 * 
 	 * @param id
-	 * @return The post requested by the user. Or returns null if the post isn't
-	 *         found.
+	 * @return The post requested as per the ID, otherwise throws a NullPointerException
 	 */
 	public Post retrievePost(int id) {
-		return (getPosts().get(id));
+		if (getPosts().get(id) == null) {
+			throw new NullPointerException();
+		} else {
+			return getPosts().get(id);
+		}
 	}
 
 	/**
