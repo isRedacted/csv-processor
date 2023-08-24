@@ -14,6 +14,7 @@ public class Main {
 
 	public static void run() {
 		while (!ui.getQuitState()) {
+			System.out.printf("%n");
 			ui.mainMenu();
 		}
 	}
