@@ -12,6 +12,7 @@ public class Main {
 	public static void main(String args[]) {
 		try {
 			getUI().getLogic().readFile("posts.csv", "ID,content,author,likes,shares,date-time");
+			System.out.printf("%nFile loaded successfully!");
 		} catch (FileFormatException e) {
 			System.err.println("Error! The file was formatted incorrectly. No posts were loaded.");
 		} catch (IOException e) {
