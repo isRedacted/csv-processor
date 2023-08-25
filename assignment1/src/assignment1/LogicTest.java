@@ -13,6 +13,9 @@ import java.io.IOException;
 public class LogicTest {
 	private Logic logic;
 	private ArrayList<Post> manualSort;
+	private Post post1;
+	private Post post2;
+	private Post post3;
 
 	@Before
 	public void setUp() {
@@ -23,6 +26,13 @@ public class LogicTest {
 	public void tearDown() {
 	}
 
+	@Test 
+	public void testAddPost_Succeed() {
+		post1 = new Post(1, "", "", 0, 0, "1/01/2023 12:12");
+		logic.addPost(1, "", "", 0, 0, "1/01/2023 12:12");
+		assertEquals(logic.getPosts().get(1).toString(), "ID: 1 Content: \"\" Author:  Likes: 0 Shares: 0 Date/Time posted: 1/01/2023 12:12");
+	}
+	
 	@Test(expected = IOException.class)
 	public void testReadFile_FileNotFound() throws FileFormatException, IOException {
 		logic.readFile("", "ID,content,author,likes,shares,date-time");
@@ -63,9 +73,12 @@ public class LogicTest {
 
 	@Test
 	public void testRetrieveNPosts_SortedListLikes() {
-		logic.getPosts().put(1, new Post(1, "", "", 1, 3, "1/01/2023 12:12"));
-		logic.getPosts().put(2, new Post(2, "", "", 2, 2, "1/01/2023 12:12"));
-		logic.getPosts().put(3, new Post(3, "", "", 3, 1, "1/01/2023 12:12"));
+		post1 = new Post(1, "", "", 1, 3, "1/01/2023 12:12");
+		post2 = new Post(2, "", "", 2, 2, "1/01/2023 12:12");
+		post3 = new Post(3, "", "", 3, 1, "1/01/2023 12:12");
+		logic.getPosts().put(1, post1);
+		logic.getPosts().put(2, post2);
+		logic.getPosts().put(3, post3);
 		manualSort = new ArrayList<Post>();
 		manualSort.add(logic.getPosts().get(3));
 		manualSort.add(logic.getPosts().get(2));
@@ -74,9 +87,12 @@ public class LogicTest {
 
 	@Test
 	public void testRetrieveNPosts_SortedListShares() {
-		logic.getPosts().put(1, new Post(1, "", "", 1, 3, "1/01/2023 12:12"));
-		logic.getPosts().put(2, new Post(2, "", "", 2, 2, "1/01/2023 12:12"));
-		logic.getPosts().put(3, new Post(3, "", "", 3, 1, "1/01/2023 12:12"));
+		post1 = new Post(1, "", "", 1, 3, "1/01/2023 12:12");
+		post2 = new Post(2, "", "", 2, 2, "1/01/2023 12:12");
+		post3 = new Post(3, "", "", 3, 1, "1/01/2023 12:12");
+		logic.getPosts().put(1, post1);
+		logic.getPosts().put(2, post2);
+		logic.getPosts().put(3, post3);
 		manualSort = new ArrayList<Post>();
 		manualSort.add(logic.getPosts().get(1));
 		manualSort.add(logic.getPosts().get(2));
@@ -85,9 +101,12 @@ public class LogicTest {
 
 	@Test
 	public void testRetrieveNPosts_SortedListExceedMaximum() {
-		logic.getPosts().put(1, new Post(1, "", "", 1, 3, "1/01/2023 12:12"));
-		logic.getPosts().put(2, new Post(2, "", "", 2, 2, "1/01/2023 12:12"));
-		logic.getPosts().put(3, new Post(3, "", "", 3, 1, "1/01/2023 12:12"));
+		post1 = new Post(1, "", "", 1, 3, "1/01/2023 12:12");
+		post2 = new Post(2, "", "", 2, 2, "1/01/2023 12:12");
+		post3 = new Post(3, "", "", 3, 1, "1/01/2023 12:12");
+		logic.getPosts().put(1, post1);
+		logic.getPosts().put(2, post2);
+		logic.getPosts().put(3, post3);
 		manualSort = new ArrayList<Post>();
 		manualSort.add(logic.getPosts().get(3));
 		manualSort.add(logic.getPosts().get(2));
@@ -97,9 +116,12 @@ public class LogicTest {
 
 	@Test(expected = NumberFormatException.class)
 	public void testRetrieveNPosts_InvalidNumber() {
-		logic.getPosts().put(1, new Post(1, "", "", 1, 3, "1/01/2023 12:12"));
-		logic.getPosts().put(2, new Post(2, "", "", 2, 2, "1/01/2023 12:12"));
-		logic.getPosts().put(3, new Post(3, "", "", 3, 1, "1/01/2023 12:12"));
+		post1 = new Post(1, "", "", 1, 3, "1/01/2023 12:12");
+		post2 = new Post(2, "", "", 2, 2, "1/01/2023 12:12");
+		post3 = new Post(3, "", "", 3, 1, "1/01/2023 12:12");
+		logic.getPosts().put(1, post1);
+		logic.getPosts().put(2, post2);
+		logic.getPosts().put(3, post3);
 		manualSort = new ArrayList<Post>();
 		manualSort.add(logic.getPosts().get(2));
 		manualSort.add(logic.getPosts().get(1));
