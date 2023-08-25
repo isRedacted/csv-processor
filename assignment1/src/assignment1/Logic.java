@@ -101,7 +101,8 @@ public class Logic {
 	 * @param flag
 	 */
 	public ArrayList<Post> retrieveNPosts(int n, String flag) {
-		HashMap<Integer, Post> tempPosts = getPosts();
+		@SuppressWarnings("unchecked")
+		HashMap<Integer, Post> tempPosts = (HashMap<Integer, Post>) getPosts().clone();
 		ArrayList<Post> topPosts = new ArrayList<Post>();
 		if (n <= 0) {
 			throw new NumberFormatException();
@@ -120,7 +121,6 @@ public class Logic {
 					}
 				}
 				topPosts.add(currentHighest);
-				// System.out.printf("%n" + currentHighest);
 				tempPosts.remove(currentHighest.getid());
 				currentHighest = null;
 			}
@@ -134,7 +134,6 @@ public class Logic {
 					}
 				}
 				topPosts.add(currentHighest);
-				// System.out.printf("%n" + currentHighest);
 				tempPosts.remove(currentHighest.getid());
 				currentHighest = null;
 			}
