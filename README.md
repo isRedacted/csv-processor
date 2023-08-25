@@ -9,7 +9,7 @@ This class handles all backend work that involved manipulating or returning the 
 This class handles anything to do with user input. It instantiates the logic class and handles any exceptions that the logic class may throw. It also tests user input for both menu navigation and validating the details of the user specified post to add.
 ### Main
 This class instantiates the UI class and performs the initial file check, handling any errors related to reading the csv file. It then runs the main UI loop until the signal is given to quit.
-## Compilation instructions
+## Running instructions
 1. Unzip csv-processor.zip to a folder
 2. Navigate your terminal/command line interface of choice to the "assignment1" folder containing "src"
 3. Copy your chosen flavour of junit 4 to this folder
