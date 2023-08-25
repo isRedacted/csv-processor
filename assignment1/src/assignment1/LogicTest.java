@@ -21,8 +21,6 @@ public class LogicTest {
 
 	@After
 	public void tearDown() {
-		System.setErr(System.err);
-		System.setOut(System.out);
 	}
 
 	@Test(expected = IOException.class)
