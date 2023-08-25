@@ -61,7 +61,7 @@ public class UI {
 		} catch (BadUserInputException e) {
 			System.err.println("Please only choose from the shown menu items!");
 		} catch (NumberFormatException e) {
-			System.err.println("Please only type correct numbers for that choice!");
+			System.err.println("Please only supply positive numbers for that choice!");
 		} catch (DateTimeParseException e) {
 			System.err.println("Please enter a valid date/time in the required format!");
 		} catch (ContentFormatException e) {
