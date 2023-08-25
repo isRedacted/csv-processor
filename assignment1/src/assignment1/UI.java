@@ -80,8 +80,8 @@ public class UI {
 		int id = Integer.valueOf(getUserChoice());
 		try {
 			logic.retrievePost(id);
-		} catch (NullPointerException e) {
 			throw new DuplicatePostException();
+		} catch (NullPointerException e) {
 		}
 
 		System.out.printf("%nWhat is the content of the post?");
@@ -120,7 +120,10 @@ public class UI {
 			throw new DateTimeParseException(null, dateTime, 0);
 		}
 
-		getLogic().addPost(id, content, author, likes, shares, dateTime);
+		if (getLogic().addPost(id, content, author, likes, shares, dateTime)) {
+			System.out.printf("%nPost successfully added!");
+		}
+		;
 	}
 
 	public void removePost() {
