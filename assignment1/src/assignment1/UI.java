@@ -130,6 +130,9 @@ public class UI {
 		System.out.printf("%nWhich post would you like to delete? (Or type \"Q\" to go back)");
 		System.out.printf("%n> ");
 		setUserChoice(getUserInput().next());
+		if (getUserChoice().equals("q") || getUserChoice().equals("Q")) {
+			return;
+		}
 		int id = Integer.valueOf(getUserChoice());
 		logic.removePost(id);
 		System.out.printf("%nPost number " + id + " deleted");
@@ -139,6 +142,9 @@ public class UI {
 		System.out.printf("%nWhich post would you like to retrieve? (Or type \"Q\" to go back)");
 		System.out.printf("%n> ");
 		setUserChoice(getUserInput().next());
+		if (getUserChoice().equals("q") || getUserChoice().equals("Q")) {
+			return;
+		}
 		int id = Integer.valueOf(getUserChoice());
 		System.out.printf("%n" + logic.retrievePost(id));
 	}
@@ -147,6 +153,9 @@ public class UI {
 		System.out.printf("%nHow many posts would you like to retrieve? (Or type \"Q\" to go back)");
 		System.out.printf("%n> ");
 		setUserChoice(getUserInput().next());
+		if (getUserChoice().equals("q") || getUserChoice().equals("Q")) {
+			return;
+		}
 		int n = Integer.valueOf(getUserChoice());
 		getLogic().retrieveNPosts(n, flag).forEach((x) -> System.out.printf("%n" + x));
 		;
