@@ -2,8 +2,6 @@ package assignment1;
 
 import static org.junit.Assert.assertEquals;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 import java.util.ArrayList;
 
 import org.junit.After;
@@ -14,17 +12,11 @@ import java.io.IOException;
 
 public class LogicTest {
 	private Logic logic;
-	private ByteArrayOutputStream errorMessage;
-	private ByteArrayOutputStream outputMessage;
 	private ArrayList<Post> manualSort;
 
 	@Before
 	public void setUp() {
 		logic = new Logic();
-		errorMessage = new ByteArrayOutputStream();
-		outputMessage = new ByteArrayOutputStream();
-		System.setErr(new PrintStream(errorMessage));
-		System.setOut(new PrintStream(outputMessage));
 	}
 
 	@After
