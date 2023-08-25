@@ -34,7 +34,7 @@ public class LogicTest {
 	}
 
 	@Test
-	public void testReadFile_FileFound() throws FileFormatException, IOException {
+	public void testReadFile_Succeed() throws FileFormatException, IOException {
 		logic.readFile("posts.csv", "ID,content,author,likes,shares,date-time");
 	}
 
