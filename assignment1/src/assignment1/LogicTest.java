@@ -84,7 +84,7 @@ public class LogicTest {
 	}
 
 	@Test
-	public void testRetrieveNPosts_SortedListLikesExceedMaximum() {
+	public void testRetrieveNPosts_SortedListExceedMaximum() {
 		logic.getPosts().put(1, new Post(1, "", "", 1, 3, "1/01/2023 12:12"));
 		logic.getPosts().put(2, new Post(2, "", "", 2, 2, "1/01/2023 12:12"));
 		logic.getPosts().put(3, new Post(3, "", "", 3, 1, "1/01/2023 12:12"));
