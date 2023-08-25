@@ -1,5 +1,9 @@
 package assignment1;
 
+/**
+ * Exception thrown if user attempts to add a post that already exists in the
+ * posts hashmap
+ */
 public class DuplicatePostException extends Exception {
 	/**
 	 * Generated serial ID

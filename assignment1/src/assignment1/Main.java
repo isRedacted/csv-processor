@@ -4,7 +4,8 @@ import java.io.IOException;
 
 /**
  * Instantiates the UI class and provides the main loop for the program, only
- * quitting when the quit state is set to true. Also reads the csv file and handles any errors
+ * quitting when the quit state is set to true. Also reads the csv file and
+ * handles any errors
  */
 public class Main {
 	private static UI ui = new UI();

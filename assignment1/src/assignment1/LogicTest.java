@@ -26,13 +26,14 @@ public class LogicTest {
 	public void tearDown() {
 	}
 
-	@Test 
+	@Test
 	public void testAddPost_Succeed() {
 		post1 = new Post(1, "", "", 0, 0, "1/01/2023 12:12");
 		logic.addPost(1, "", "", 0, 0, "1/01/2023 12:12");
-		assertEquals(logic.getPosts().get(1).toString(), "ID: 1 Content: \"\" Author:  Likes: 0 Shares: 0 Date/Time posted: 1/01/2023 12:12");
+		assertEquals(logic.getPosts().get(1).toString(),
+				"ID: 1 Content: \"\" Author:  Likes: 0 Shares: 0 Date/Time posted: 1/01/2023 12:12");
 	}
-	
+
 	@Test(expected = IOException.class)
 	public void testReadFile_FileNotFound() throws FileFormatException, IOException {
 		logic.readFile("", "ID,content,author,likes,shares,date-time");

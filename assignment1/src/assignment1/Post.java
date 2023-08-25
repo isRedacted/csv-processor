@@ -3,7 +3,8 @@ package assignment1;
 import java.io.Serializable;
 
 /**
- * Contains all of the social media post data, as well as the associated setters and getters.
+ * Contains all of the social media post data, as well as the associated setters
+ * and getters.
  */
 public class Post implements Serializable {
 	/**

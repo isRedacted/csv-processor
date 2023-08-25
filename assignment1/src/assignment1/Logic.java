@@ -21,23 +21,24 @@ public class Logic {
 	 * Reads the posts.csv file, splits it by the comma delimiter, and creates new
 	 * post objects into the posts hashmap. Catches exceptions related to file not
 	 * found, and file improperly formatted.
-	 * @throws FileFormatException 
-	 * @throws IOException 
+	 * 
+	 * @throws FileFormatException
+	 * @throws IOException
 	 */
 	public void readFile(String filename, String format) throws FileFormatException, IOException {
-			List<String> readPosts = Files.readAllLines(Paths.get(filename));
+		List<String> readPosts = Files.readAllLines(Paths.get(filename));
 
-			if (!readPosts.get(0).equals(format)) {
-				throw new FileFormatException();
-			}
+		if (!readPosts.get(0).equals(format)) {
+			throw new FileFormatException();
+		}
 
-			for (int i = 1; i < readPosts.size(); i++) {
-				String[] splitPost = readPosts.get(i).split(",");
+		for (int i = 1; i < readPosts.size(); i++) {
+			String[] splitPost = readPosts.get(i).split(",");
 
-				Post newPost = new Post(Integer.parseInt(splitPost[0]), splitPost[1], splitPost[2],
-						Integer.parseInt(splitPost[3]), Integer.parseInt(splitPost[4]), splitPost[5]);
-				posts.put(newPost.getid(), newPost);
-			}
+			Post newPost = new Post(Integer.parseInt(splitPost[0]), splitPost[1], splitPost[2],
+					Integer.parseInt(splitPost[3]), Integer.parseInt(splitPost[4]), splitPost[5]);
+			posts.put(newPost.getid(), newPost);
+		}
 	}
 
 	/**
@@ -58,6 +59,7 @@ public class Logic {
 	/**
 	 * Removes a post based on ID, warns the user if the ID is not found in the
 	 * hashmap.
+	 * 
 	 * @param id
 	 * @return The post requested as per the ID, otherwise throws a
 	 *         NullPointerException
