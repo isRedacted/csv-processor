@@ -6,6 +6,10 @@ import java.io.Serializable;
  * Contains all of the social media post data, as well as the associated setters and getters.
  */
 public class Post implements Serializable {
+	/**
+	 * Generated serial ID
+	 */
+	private static final long serialVersionUID = 2636613401475440782L;
 	private int id;
 	private String content;
 	private String author;
