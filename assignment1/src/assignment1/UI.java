@@ -145,7 +145,8 @@ public class UI {
 		System.out.printf("%n> ");
 		setUserChoice(getUserInput().next());
 		int n = Integer.valueOf(getUserChoice());
-		getLogic().retrieveNPosts(n, flag).forEach((x) -> System.out.printf("%n" + x));;
+		getLogic().retrieveNPosts(n, flag).forEach((x) -> System.out.printf("%n" + x));
+		;
 	}
 
 	public boolean getQuitState() {
